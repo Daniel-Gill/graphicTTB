@@ -1,0 +1,140 @@
+{
+    "stations": [
+        {
+            "name": "Coventry",
+            "y": 40
+        },
+        {
+            "name": "Canley",
+            "y": 80
+        },
+        {
+            "name": "Tile Hill",
+            "y": 140
+        },
+        {
+            "name": "Berkswell",
+            "y": 180
+        },
+        {
+            "name": "Hampton-in-Arden",
+            "y": 260
+        },
+        {
+            "name": "Birmingham International",
+            "y": 300
+        },
+        {
+            "name": "Marston Green",
+            "y": 340
+        },
+        {
+            "name": "Lea Hall",
+            "y": 380
+        },
+        {
+            "name": "Stechford",
+            "y": 410
+        },
+        {
+            "name": "Adderley Park",
+            "y": 450
+        },
+        {
+            "name": "Birmingham New Street",
+            "y": 500
+        }
+    ],
+    "services": [
+        {
+            "ref": "1Y21",
+            "stops": [
+                {
+                    "station": "Coventry",
+                    "arr": "",
+                    "dep": "10:45"
+                },
+                {
+                    "station": "Canley",
+                    "arr": "10:48",
+                    "dep": "10:49"
+                },
+                {
+                    "station": "Tile Hill",
+                    "arr":"10:52",
+                    "dep": "10:52"
+                },
+                {
+                    "station": "Berkswell",
+                    "arr": "10:55",
+                    "dep": "10:56"
+                },
+                {
+                    "station": "Hampton-in-Arden",
+                    "arr": "11:00",
+                    "dep": "11:00"
+                },
+                {
+                    "station": "Birmingham International",
+                    "arr": "11:03",
+                    "dep": "11:04"
+                },
+                {
+                    "station": "Birmingham New Street",
+                    "arr": "11:14",
+                    "dep": ""
+                }
+            ]
+        },
+        {
+            "ref": "1D13",
+            "stops": [
+                {
+                    "station":"Birmingham International",
+                    "arr": "",
+                    "dep": "11:08"
+                },
+                {
+                    "station":"Birmingham New Street",
+                    "arr": "11:20",
+                    "dep": ""
+                }
+            ]
+        },
+        {
+            "ref":"2H45",
+            "stops": [
+                {
+                    "station":"Birmingham International",
+                    "arr": "",
+                    "dep": "11:21"
+                },
+                {
+                    "station":"Marston Green",
+                    "arr": "11:24",
+                    "dep": "11:24"
+                },
+                {
+                    "station":"Lea Hall",
+                    "arr": "11:27",
+                    "dep": "11:28"
+                },
+                {
+                    "station":"Stechford",
+                    "arr": "11:30",
+                    "dep": "11:31"
+                },
+                {
+                    "station":"Adderley Park",
+                    "arr": "11:34",
+                    "dep": "11:34"
+                },
+                {
+                    "station":"Birmingham New Street",
+                    "arr": "11:39",
+                    "dep": ""
+                }
+            ]
+        }
+    ]
+}

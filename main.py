@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import math
 import random
 import dearpygui.dearpygui as dpg
+import json
 dpg.create_context()
 
 class Station:
@@ -41,8 +42,21 @@ class Stop:
     
     def __init__(self, station, arr, dep):
         self.station = station
+        # convert to minutes
+        if type(arr) == str and arr != "" and arr != None:
+            arr = int(arr.split(":")[0])*60 + int(arr.split(":")[1])
+        if type(dep) == str and dep != "" and dep != None:
+            dep = int(dep.split(":")[0])*60 + int(dep.split(":")[1])
+        if arr == '' or arr == None:
+            arr = dep-0.25
+            dep = dep+0.25
+        if dep == '' or dep == None:
+            dep = arr+0.25
+            arr = arr-0.25
         if arr == dep:
-            arr -= 1
+            arr = arr-0.25
+            dep = dep+0.25
+        print(f"Arr: {arr}, Dep: {dep}")
         self.arr = arr
         self.dep = dep
     
@@ -54,10 +68,32 @@ services = [
     Service("Service 3", [Stop(stations[2], 3, 4), Stop(stations[1], 18, 19)], colour=(0,0,255))
 ]
 
+def get_station(name):
+    for station in stations:
+        if station.name == name:
+            return station
+    return None 
+
 start_time = 0
 end_time = 24*60
 
 margin = 25
+
+def load_data():
+    file = open("birmingham.ttb", "r")
+    data = json.load(file)
+    stations.clear()
+    services.clear()
+    for station in data["stations"]:
+        stations.append(Station(station["name"], station["y"]))
+    for service in data["services"]:
+        stops = []
+        for stop in service["stops"]:
+            stops.append(Stop(get_station(stop["station"]), stop["arr"], stop["dep"]))
+        services.append(Service(service["ref"], stops, (random.randint(0,255),random.randint(0,255),random.randint(0,255))))
+    file.close()
+    dpg.delete_item(drawlist, children_only=True)
+    draw_grid()
 
 def zoom_in():
     global start_time, end_time
@@ -110,6 +146,9 @@ def zoom_to_fit():
                 start_time = stop.arr
             if stop.dep > end_time:
                 end_time = stop.dep
+    # round to nearest hour
+    start_time = math.floor(start_time/60)*60
+    end_time = math.ceil(end_time/60)*60
     dpg.delete_item(drawlist, children_only=True)
     draw_grid()
 
@@ -222,7 +261,7 @@ with dpg.window() as window:
 
     with dpg.group(horizontal=True):
         dpg.add_button(label="Save")
-        dpg.add_button(label="Load")
+        dpg.add_button(label="Load", callback=load_data)
         dpg.add_button(label="Export")
         dpg.add_button(label="Zoom In", callback=zoom_in)
         dpg.add_button(label="Zoom Out", callback=zoom_out)
