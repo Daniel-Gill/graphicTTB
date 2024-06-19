@@ -56,7 +56,6 @@ class Stop:
         if arr == dep:
             arr = arr-0.25
             dep = dep+0.25
-        print(f"Arr: {arr}, Dep: {dep}")
         self.arr = arr
         self.dep = dep
     
@@ -76,6 +75,7 @@ def get_station(name):
 
 start_time = 0
 end_time = 24*60
+zoom_level = (end_time - start_time)
 
 margin = 25
 
@@ -90,22 +90,23 @@ def load_data():
         stops = []
         for stop in service["stops"]:
             stops.append(Stop(get_station(stop["station"]), stop["arr"], stop["dep"]))
-        services.append(Service(service["ref"], stops, (random.randint(0,255),random.randint(0,255),random.randint(0,255))))
+        services.append(Service(service["ref"], stops, (random.randint(50,255),random.randint(50,255),random.randint(50,255))))
     file.close()
     dpg.delete_item(drawlist, children_only=True)
     draw_grid()
 
 def zoom_in():
-    global start_time, end_time
+    global start_time, end_time, zoom_level
     if end_time-start_time <= 120:
         return
     start_time += 60
     end_time -= 60
+    zoom_level = (end_time-start_time)
     dpg.delete_item(drawlist, children_only=True)
     draw_grid()
 
 def zoom_out():
-    global start_time, end_time
+    global start_time, end_time, zoom_level
     if end_time-start_time >= 24*60:
         return
     if start_time-60 < 0:
@@ -115,6 +116,7 @@ def zoom_out():
     else: 
         start_time -= 60
         end_time += 60
+    zoom_level = (end_time - start_time)
     dpg.delete_item(drawlist, children_only=True)
     draw_grid()
     
@@ -137,7 +139,7 @@ def move_right():
     draw_grid()
 
 def zoom_to_fit():
-    global start_time, end_time
+    global start_time, end_time, zoom_level
     start_time = 24*60
     end_time = 0
     for service in services:
@@ -149,6 +151,7 @@ def zoom_to_fit():
     # round to nearest hour
     start_time = math.floor(start_time/60)*60
     end_time = math.ceil(end_time/60)*60
+    zoom_level = (end_time - start_time)
     dpg.delete_item(drawlist, children_only=True)
     draw_grid()
 
@@ -157,23 +160,36 @@ def draw_grid():
     width = dpg.get_item_width(drawlist)
     dpg.draw_line((margin,margin), (width-margin,margin), color=(255,255,255), thickness=3, parent=drawlist)
     dpg.draw_line((margin,margin), (margin,height-margin), color=(255,255,255), thickness=3, parent=drawlist)
+    dpg.draw_line((margin,height-margin), (width-margin,height-margin), color=(255,255,255), thickness=3, parent=drawlist)
     
     # Drawing station lines
     for station in stations:
         if station is Portal:
-            dpg.draw_text((margin+5,station.y+5), station.name, color=(150,150,150), parent=drawlist)
+            dpg.draw_text((margin+5,station.y+5), station.name, color=(150,150,150), parent=drawlist, size=16)
             dpg.draw_line((margin,station.y+margin), (width-margin,station.y+margin), color=(150,150,150), thickness=1.5 if station.highlighted else 0.5, parent=drawlist, tag=station.name)
         else:
-            dpg.draw_text((margin+5,station.y+5), station.name, color=(255,255,255), parent=drawlist)
+            dpg.draw_text((margin+5,station.y+5), station.name, color=(255,255,255), parent=drawlist, size=16)
             dpg.draw_line((margin,station.y+margin), (width-margin,station.y+margin), color=(255,255,255), thickness=3 if station.highlighted else 1, parent=drawlist, tag=station.name)
     
     # Drawing time lines
+    print(zoom_level)
     gap = 60
     interval = (width-2*margin)/(end_time-start_time)
     for i in range(start_time, end_time, gap):
-        dpg.draw_text((margin+(i-start_time)*interval,margin-20), f"{i//60:02d}:{i%60:02d}", color=(255,255,255), parent=drawlist)
+        dpg.draw_text((margin+(i-start_time)*interval,margin-20), f"{i//60:02d}:{i%60:02d}", color=(255,255,255), parent=drawlist, size=16)
         dpg.draw_line((margin+(i-start_time)*interval,margin), (margin+(i-start_time)*interval,height-margin), color=(255,255,255), thickness=1, parent=drawlist)
+    if zoom_level <= 360:
+        for i in range(start_time+30, end_time, gap):
+            dpg.draw_line((margin+(i-start_time)*interval,margin), (margin+(i-start_time)*interval,height-margin), color=(255,255,255), thickness=0.5, parent=drawlist)
+            if zoom_level <= 300:
+                dpg.draw_text((margin+(i-start_time)*interval,margin-20), f"{i//60:02d}:{i%60:02d}", color=(255,255,255), parent=drawlist, size=13)
+    if zoom_level <= 180:
+        for i in range(start_time+15, end_time, int(gap/2)):
+            dpg.draw_line((margin+(i-start_time)*interval,margin), (margin+(i-start_time)*interval,height-margin), color=(255,255,255), thickness=0.5, parent=drawlist)
+            if zoom_level <= 120:
+                dpg.draw_text((margin+(i-start_time)*interval,margin-20), f"{i//60:02d}:{i%60:02d}", color=(255,255,255), parent=drawlist, size=13)
     dpg.draw_line((margin+(end_time-start_time)*interval,margin), (margin+(end_time-start_time)*interval,height-margin), color=(255,255,255), thickness=1, parent=drawlist)
+    
 
     # Drawing services
     for service in services:
@@ -221,7 +237,6 @@ def hover_handler(sender, app_data):
     for station in stations:
         if y-margin-border_correction > station.y-10 and y-margin-border_correction < station.y+10 and x > margin and x < 1000 - margin:
             station.highlighted = True
-            print(f"Hovering over {station.name}")
         else:
             station.highlighted = False
             
@@ -244,7 +259,6 @@ def click_handler(sender, app_data):
                     otherstation.highlighted = False
             station.editing = True
             station.highlighted = True
-            print(f"Editing {station.name}")
             dpg.delete_item(drawlist, children_only=True)
             draw_grid()
             dpg.delete_item(editor_group, children_only=True)
