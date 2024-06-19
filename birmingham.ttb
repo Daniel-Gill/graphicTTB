@@ -135,6 +135,171 @@
                     "dep": ""
                 }
             ]
+        },
+        {
+            "ref":"1Y23",
+            "stops": [
+                {
+                    "station":"Coventry",
+                    "arr":"",
+                    "dep":"11:15"
+                },
+                {
+                    "station":"Canley",
+                    "arr":"11:18",
+                    "dep":"11:18"
+                },
+                {
+                    "station":"Tile Hill",
+                    "arr":"11:22",
+                    "dep":"11:22"
+                },
+                {
+                    "station":"Berkswell",
+                    "arr":"11:25",
+                    "dep":"11:26"
+                },
+                {
+                    "station":"Hampton-in-Arden",
+                    "arr":"11:30",
+                    "dep":"11:30"
+                },
+                {
+                    "station":"Birmingham International",
+                    "arr":"11:33",
+                    "dep":"11:34"
+                },
+                {
+                    "station":"Birmingham New Street",
+                    "arr":"11:44",
+                    "dep":""
+                }
+            ]
+        },
+        {
+            "ref":"9S60",
+            "stops": [
+                {
+                    "station":"Coventry",
+                    "arr":"",
+                    "dep":"11:27"
+                },
+                {
+                    "station":"Birmingham International",
+                    "arr":"11:36",
+                    "dep":"11:38"
+                },
+                {
+                    "station":"Birmingham New Street",
+                    "arr":"11:48",
+                    "dep":""
+                }
+            ]
+        },
+        {
+            "ref":"1M34",
+            "stops": [
+                {
+                    "station":"Coventry",
+                    "arr":"",
+                    "dep":"11:28"
+                },
+                {
+                    "station":"Birmingham International",
+                    "arr":"11:39",
+                    "dep":"11:41"
+                },
+                {
+                    "station":"Birmingham New Street",
+                    "arr":"11:51",
+                    "dep":""
+                }
+            ]
+        },
+        {
+            "ref":"9G15",
+            "stops":[
+                {
+                    "station":"Coventry",
+                    "arr":"",
+                    "dep":"11:36"
+                },
+                {
+                    "station":"Birmingham International",
+                    "arr":"11:45",
+                    "dep":"11:46"
+                },
+                {
+                    "station":"Birmingham New Street",
+                    "arr":"11:56",
+                    "dep":""
+                }
+            ]
+        },
+        {
+            "ref":"2H47",
+            "stops": [
+                {
+                    "station":"Birmingham International",
+                    "arr":"",
+                    "dep":"11:51"
+                },
+                {
+                    "station":"Marston Green",
+                    "arr":"11:53",
+                    "dep":"11:54"
+                },
+                {
+                    "station":"Lea Hall",
+                    "arr":"11:58",
+                    "dep":"11:58"
+                },
+                {
+                    "station":"Stechford",
+                    "arr":"12:01",
+                    "dep":"12:01"
+                },
+                {
+                    "station":"Birmingham New Street",
+                    "arr":"12:08",
+                    "dep":""
+                }
+            ]
+        },
+        {
+            "ref":"5Q53",
+            "stops": [
+                {
+                    "station":"Coventry",
+                    "arr":"",
+                    "dep":"11:40"
+                },
+                {
+                    "station":"Canley",
+                    "arr":"11:42",
+                    "dep":"11:43"
+                },
+                {
+                    "station":"Tile Hill",
+                    "arr":"11:46",
+                    "dep":"11:46"
+                },
+                {
+                    "station":"Berkswell",
+                    "arr":"11:49",
+                    "dep":"11:49"
+                },
+                {
+                    "station":"Hampton-in-Arden",
+                    "arr":"11:53",
+                    "dep":"11:53"
+                },
+                {
+                    "station":"Birmingham International",
+                    "arr":"11:59",
+                    "dep":""
+                }
+            ]
         }
     ]
 }

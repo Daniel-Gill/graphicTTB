@@ -172,7 +172,6 @@ def draw_grid():
             dpg.draw_line((margin,station.y+margin), (width-margin,station.y+margin), color=(255,255,255), thickness=3 if station.highlighted else 1, parent=drawlist, tag=station.name)
     
     # Drawing time lines
-    print(zoom_level)
     gap = 60
     interval = (width-2*margin)/(end_time-start_time)
     for i in range(start_time, end_time, gap):
